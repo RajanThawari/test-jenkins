@@ -2,26 +2,26 @@ pipeline{
     agent{
         node{
            label 'built-in'
-           customWorkspace '/mnt/pipeline2'
+           customWorkspace '/media/workspace'
         }
     }
     
     stages{
         stage (git_clone){
             steps{
-                git 'https://github.com/RajanThawari/game-of-life.git'
+                git 'https://github.com/RajanThawari/Practice-3.git'
             }
         }
         
         stage (Built){
             steps{
-                sh 'mvn install -DskipTests'
+                sh 'cp /media/workspace/index.html /mnt/s3'
             }
         }
         
         stage (Deploy){
             steps{
-                sh 'cp /mnt/pipeline2/gameoflife-web/target/gameoflife.war /mnt/data/apache-tomcat-9.0.71/webapps' 
+                sh 'cp /mnt/s3/index.html /var/www/html' 
             }
         }
     }
